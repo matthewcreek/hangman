@@ -6,7 +6,7 @@ import HangmanWord from "./HangmanWord"
 import Keyboard from "./Keyboard"
 
 function getWord() {
-  return words[Math.floor(Math.random() * words.length)]
+  return words[Math.floor(Math.random() * words.length)].toUpperCase()
 }
 function App() {
   const [wordToGuess, setWordToGuess] = useState(getWord)
@@ -26,10 +26,10 @@ function App() {
     const handler = (e: KeyboardEvent) => {
       const key = e.key
 
-      if (!key.match(/^[a-z]$/)) return
+      if (!key.match(/^[a-z]$/i)) return
 
       e.preventDefault()
-      addGuessedLetter(key)
+      addGuessedLetter(key.toUpperCase())
     }
 
     document.addEventListener('keypress', handler)
@@ -57,7 +57,6 @@ function App() {
     }
   }, [])
 
-  console.log(wordToGuess)
   return (
     <div style={{
       maxWidth: '800px',
@@ -81,7 +80,7 @@ function App() {
         <Keyboard 
           disabled={isWinner || isLoser}
           activeLetters={guessedLetters.filter(letter =>
-            wordToGuess.includes(letter)
+            wordToGuess.includes(letter.toUpperCase())
           )}
           inactiveLetters={incorrectLetters}
           addGuessedLetter={addGuessedLetter}
