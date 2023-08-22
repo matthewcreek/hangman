@@ -30,12 +30,13 @@ const KEYS = [
 ]
 
 type KeyboardProps = {
+    disabled?: boolean
     activeLetters: string[]
     inactiveLetters: string[]
     addGuessedLetter: (letter: string) => void
 }
 
-export default function Keyboard({ activeLetters, inactiveLetters, addGuessedLetter}: KeyboardProps) {
+export default function Keyboard({ disabled = false, activeLetters, inactiveLetters, addGuessedLetter}: KeyboardProps) {
     return (
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(75px, 1fr))',gap:'.5rem'}}>
             {KEYS.map(letter => {
@@ -45,7 +46,7 @@ export default function Keyboard({ activeLetters, inactiveLetters, addGuessedLet
                     <button 
                         onClick={() => addGuessedLetter(letter)} 
                         className={`${styles.btn} ${isActive ? styles.active : ''} ${isInactive ? styles.inactive : ''}`}
-                        disabled={isInactive || isActive}
+                        disabled={isInactive || isActive || disabled}
                         key={letter}
                     >
                         {letter}
